@@ -1,101 +1,110 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <title>Blockly בעברית עם פייתון</title>
-  <script src="blockly/blockly_compressed.js"></script>
-  <script src="blockly/blocks_compressed.js"></script>
-  <script src="blockly/python_compressed.js"></script>
-  <script src="blockly/msg/js/he.js"></script>
+  <meta charset="UTF-8" />
+  <title>ברוך הבא למערכת מבוא לתכנות</title>
   <style>
-    html, body {
-      height: 100%;
+    body {
       margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #f0f4fa, #e1e9f3);
+      color: #1a1a1a;
       direction: rtl;
-      font-family: sans-serif;
-    }
-    #blocklyDiv {
-      height: calc(100% - 100px);
-      width: 100%;
-    }
-    #controls {
-      height: 60px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 1em;
-      background: #f0f0f0;
+      padding: 2em;
     }
-    #logo {
-      height: 48px;
-      padding: 5px;
-    }
-    #buttons {
+
+    header {
       display: flex;
-      gap: 1em;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+      align-items: center;
     }
-    #codeArea {
-      white-space: pre-wrap;
-      background: #f8f8f8;
-      padding: 1em;
-      font-family: monospace;
-      border-top: 1px solid #ccc;
-      direction: ltr;
+
+    header img {
+      height: 48px;
     }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 1em;
+    }
+
+    .login-box {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-box input {
+      font-size: 1em;
+      padding: 0.6em;
+      width: 100%;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .login-box button {
+      background: #0074d9;
+      color: white;
+      font-size: 1em;
+      padding: 0.6em 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #005fa3;
+    }
+
+    .footer {
+      margin-top: 3em;
+      font-size: 0.9em;
+      color: #666;
+    }
+
   </style>
 </head>
 <body>
-  <div id="controls">
-    <img id="logo" src="Techni Logo.png" alt="לוגו" />
-    <div id="buttons">
-      <button onclick="showCode()">הצג קוד פייתון בתצוגה</button>
-      <button onclick="runCode()">הצג קוד פייתון בחלונית</button>
+  <header>
+    <img src="Techni Logo.png" alt="לוגו">
+  </header>
+
+  <main>
+    <h1>ברוך הבא למערכת מבוא לתכנות</h1>
+    <div class="login-box">
+      <label for="personalId">אנא הזן את המספר האישי שלך:</label>
+      <input type="text" id="personalId" placeholder="מספר אישי">
+      <button onclick="login()">התחל</button>
     </div>
+  </main>
+
+  <div class="footer">
+    <a href="#">כניסת מורה</a>
   </div>
 
-  <div id="blocklyDiv"></div>
-  <pre id="codeArea"></pre>
-
-  <xml id="toolbox" style="display: none">
-    <category name="לוגיקה">
-      <block type="controls_if"></block>
-      <block type="logic_compare"></block>
-      <block type="logic_operation"></block>
-      <block type="logic_negate"></block>
-      <block type="logic_boolean"></block>
-    </category>
-    <category name="לולאות">
-      <block type="controls_repeat_ext"></block>
-      <block type="controls_whileUntil"></block>
-      <block type="controls_for"></block>
-    </category>
-    <category name="מתמטיקה">
-      <block type="math_number"></block>
-      <block type="math_arithmetic"></block>
-    </category>
-    <category name="טקסט">
-      <block type="text"></block>
-      <block type="text_print"></block>
-    </category>
-    <category name="משתנים" custom="VARIABLE"></category>
-    <category name="פונקציות" custom="PROCEDURE"></category>
-  </xml>
-
   <script>
-    const workspace = Blockly.inject('blocklyDiv', {
-      toolbox: document.getElementById('toolbox'),
-      rtl: true,
-      scrollbars: true
-    });
+    function login() {
+      const id = document.getElementById("personalId").value.trim();
+      if (id.length === 0) {
+        alert("אנא הזן מספר אישי");
+        return;
+      }
 
-    function showCode() {
-      const code = Blockly.Python.workspaceToCode(workspace);
-      document.getElementById('codeArea').textContent = code;
-    }
+      // שמור את המספר האישי בזיכרון
+      localStorage.setItem("personalId", id);
 
-    function runCode() {
-      const code = Blockly.Python.workspaceToCode(workspace);
-      alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
+      // נווט לדף הבית של המשתמש (נבנה בהמשך)
+      window.location.href = "dashboard.html";
     }
   </script>
 </body>
