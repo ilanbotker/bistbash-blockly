@@ -1,4 +1,4 @@
-// קובץ תרגום לעברית עבור Blockly
+// Hebrew translations for Blockly
 var Blockly = Blockly || {};
 Blockly.Msg = Blockly.Msg || {};
 
