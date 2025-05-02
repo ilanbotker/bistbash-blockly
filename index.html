@@ -6,17 +6,49 @@
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/python_compressed.js"></script>
+  <script src="blockly/msg/js/he.js"></script>
   <style>
-    html, body { height: 100%; margin: 0; direction: rtl; font-family: sans-serif; }
-    #blocklyDiv { height: calc(100% - 60px); width: 100%; }
-    #controls { height: 60px; display: flex; align-items: center; padding: 0 1em; gap: 1em; background: #f0f0f0; }
-    #codeArea { white-space: pre-wrap; background: #eee; padding: 1em; font-family: monospace; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      direction: rtl;
+      font-family: sans-serif;
+    }
+    #blocklyDiv {
+      height: calc(100% - 60px);
+      width: 100%;
+    }
+    #controls {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1em;
+      background: #f0f0f0;
+    }
+    #logo {
+      height: 48px;
+      padding: 5px;
+    }
+    #buttons {
+      display: flex;
+      gap: 1em;
+    }
+    #codeArea {
+      white-space: pre-wrap;
+      background: #eee;
+      padding: 1em;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
   <div id="controls">
-    <button onclick="showCode()">הצג קוד פייתון</button>
-    <button onclick="runCode()">הרץ קוד (מדמה הרצה)</button>
+    <img id="logo" src="Techni Logo.png" alt="לוגו">
+    <div id="buttons">
+      <button onclick="showCode()">הצג קוד פייתון</button>
+      <button onclick="runCode()">הרץ קוד (מדמה הרצה)</button>
+    </div>
   </div>
   <div id="blocklyDiv"></div>
   <pre id="codeArea"></pre>
@@ -47,29 +79,20 @@
   </xml>
 
   <script>
-    fetch("blockly/msg/json/he.json")
-      .then(response => response.json())
-      .then(translations => {
-        Blockly.setLocale(translations);
-        initBlockly();
-      });
+    const workspace = Blockly.inject('blocklyDiv', {
+      toolbox: document.getElementById('toolbox'),
+      rtl: true,
+      scrollbars: true
+    });
 
-    function initBlockly() {
-      const workspace = Blockly.inject('blocklyDiv', {
-        toolbox: document.getElementById('toolbox'),
-        rtl: true,
-        scrollbars: true
-      });
+    function showCode() {
+      const code = Blockly.Python.workspaceToCode(workspace);
+      document.getElementById('codeArea').textContent = code;
+    }
 
-      window.showCode = function () {
-        const code = Blockly.Python.workspaceToCode(workspace);
-        document.getElementById('codeArea').textContent = code;
-      };
-
-      window.runCode = function () {
-        const code = Blockly.Python.workspaceToCode(workspace);
-        alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
-      };
+    function runCode() {
+      const code = Blockly.Python.workspaceToCode(workspace);
+      alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
     }
   </script>
 </body>
