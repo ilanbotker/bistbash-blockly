@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -8,30 +9,10 @@
   <script src="blockly/python_compressed.js"></script>
   <script src="blockly/msg/js/he.js"></script>
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      direction: rtl;
-      font-family: sans-serif;
-    }
-    #blocklyDiv {
-      height: calc(100% - 60px);
-      width: 100%;
-    }
-    #controls {
-      height: 60px;
-      display: flex;
-      align-items: center;
-      padding: 0 1em;
-      gap: 1em;
-      background: #f0f0f0;
-    }
-    #codeArea {
-      white-space: pre-wrap;
-      background: #eee;
-      padding: 1em;
-      font-family: monospace;
-    }
+    html, body { height: 100%; margin: 0; direction: rtl; font-family: sans-serif; }
+    #blocklyDiv { height: calc(100% - 60px); width: 100%; }
+    #controls { height: 60px; display: flex; align-items: center; padding: 0 1em; gap: 1em; background: #f0f0f0; }
+    #codeArea { white-space: pre-wrap; background: #eee; padding: 1em; font-family: monospace; }
   </style>
 </head>
 <body>
@@ -81,11 +62,7 @@
 
     function runCode() {
       const code = Blockly.Python.workspaceToCode(workspace);
-      try {
-        alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
-      } catch (e) {
-        alert("שגיאה בהרצה:\n" + e);
-      }
+      alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
     }
   </script>
 </body>
