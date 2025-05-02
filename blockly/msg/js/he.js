@@ -334,3 +334,6 @@ Blockly.Msg["WORKSPACE_ARIA_LABEL"] = "סביבת העבודה בלוקלי";
 Blockly.Msg["COLLAPSED_WARNINGS_WARNING"] = "קוביות מצומצמות מכילות אזהרות.";
 Blockly.Msg["DIALOG_OK"] = "אישור";
 Blockly.Msg["DIALOG_CANCEL"] = "ביטול";
+
+
+Blockly.setLocale(Blockly.Msg);
