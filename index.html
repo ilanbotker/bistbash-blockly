@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -7,7 +6,6 @@
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/python_compressed.js"></script>
-  <script src="blockly/msg/js/he.js"></script>
   <style>
     html, body { height: 100%; margin: 0; direction: rtl; font-family: sans-serif; }
     #blocklyDiv { height: calc(100% - 60px); width: 100%; }
@@ -49,20 +47,29 @@
   </xml>
 
   <script>
-    const workspace = Blockly.inject('blocklyDiv', {
-      toolbox: document.getElementById('toolbox'),
-      rtl: true,
-      scrollbars: true
-    });
+    fetch("blockly/msg/json/he.json")
+      .then(response => response.json())
+      .then(translations => {
+        Blockly.setLocale(translations);
+        initBlockly();
+      });
 
-    function showCode() {
-      const code = Blockly.Python.workspaceToCode(workspace);
-      document.getElementById('codeArea').textContent = code;
-    }
+    function initBlockly() {
+      const workspace = Blockly.inject('blocklyDiv', {
+        toolbox: document.getElementById('toolbox'),
+        rtl: true,
+        scrollbars: true
+      });
 
-    function runCode() {
-      const code = Blockly.Python.workspaceToCode(workspace);
-      alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
+      window.showCode = function () {
+        const code = Blockly.Python.workspaceToCode(workspace);
+        document.getElementById('codeArea').textContent = code;
+      };
+
+      window.runCode = function () {
+        const code = Blockly.Python.workspaceToCode(workspace);
+        alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);
+      };
     }
   </script>
 </body>
