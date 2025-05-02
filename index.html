@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2566">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="he" dir="rtl"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Blockly בעברית עם פייתון&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="blockly/blockly_compressed.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="blockly/blocks_compressed.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="blockly/python_compressed.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="blockly/msg/js/he.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html, body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>direction: rtl;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#blocklyDiv {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: calc(100% - 60px);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#controls {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 60px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 0 1em;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 1em;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #f0f0f0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#codeArea {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>white-space: pre-wrap;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #eee;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 1em;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: monospace;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="controls"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="showCode()"&gt;הצג קוד פייתון&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="runCode()"&gt;הרץ קוד (מדמה הרצה)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="blocklyDiv"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;pre id="codeArea"&gt;&lt;/pre&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;xml id="toolbox" style="display: none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;category name="לוגיקה"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="controls_if"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="logic_compare"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="logic_operation"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="logic_negate"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="logic_boolean"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/category&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;category name="לולאות"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="controls_repeat_ext"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="controls_whileUntil"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="controls_for"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/category&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;category name="מתמטיקה"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="math_number"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="math_arithmetic"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/category&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;category name="טקסט"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="text"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;block type="text_print"&gt;&lt;/block&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/category&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;category name="משתנים" custom="VARIABLE"&gt;&lt;/category&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;category name="פונקציות" custom="PROCEDURE"&gt;&lt;/category&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/xml&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const workspace = Blockly.inject('blocklyDiv', {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>toolbox: document.getElementById('toolbox'),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>rtl: true,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>scrollbars: true</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function showCode() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const code = Blockly.Python.workspaceToCode(workspace);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('codeArea').textContent = code;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function runCode() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const code = Blockly.Python.workspaceToCode(workspace);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>alert("הקוד שנוצר (לא מורץ בפועל):\n\n" + code);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>alert("שגיאה בהרצה:\n" + e);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
