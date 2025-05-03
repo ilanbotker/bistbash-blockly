@@ -4,32 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Blockly בעברית עם פייתון</title>
-  <script src="blockly/blockly_compressed.js">
-  function runCode() {
-    const code = Blockly.Python.workspaceToCode(workspace);
-    const outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = ''; // איפוס הפלט
-
-    Sk.configure({
-      output: function(text) {
-        outputDiv.innerHTML += text + '<br>';
-      },
-      read: function(x) {
-        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-          throw "File not found: '" + x + "'";
-        return Sk.builtinFiles["files"][x];
-      }
-    });
-
-    Sk.misceval.asyncToPromise(function() {
-      return Sk.importMainWithBody("<stdin>", false, code, true);
-    }).catch(function(err) {
-      outputDiv.innerHTML += `<span style="color:red;">שגיאה: ${err.toString()}</span>`;
-    });
-  }
-
-</script>
+  <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
+<script src="blockly/blocks/colour.js"></script>
   <script src="blockly/python_compressed.js"></script>
   <script src="blockly/msg/js/he.js"></script>
   <style>
@@ -166,60 +143,197 @@
 </style>
 </style>
 </style>
-
-  <script src="skulpt.min.js"></script>
-  <script src="skulpt-stdlib.js"></script>
-
 </head>
 <body>
   <div id="blocklyDiv"></div>
 
-  <div id="output" style="
-  direction: ltr;
-  background-color: #222;
-  color: #0f0;
-  padding: 10px;
-  font-family: monospace;
-  height: 150px;
-  overflow-y: auto;
-  border-top: 2px solid #555;
-"></div>
-
-<div id="controls">
+  <div id="controls">
     <button onclick="showCode()">הצג קוד פייתון</button>
     <button onclick="downloadCode()">הורד קובץ פייתון</button>
     <button onclick="saveProject()">שמור פרויקט</button>
-    <button onclick="runCode()">הרץ קוד</button>
     <label for="fileInput">טען פרויקט</label>
     <input type="file" id="fileInput" accept=".xml" onchange="loadProject(event)">
   </div>
 
   <div id="notification"></div>
 
-  <xml id="toolbox" style="display: none">
-    <category name="לוגיקה">
-      <block type="controls_if"></block>
-      <block type="logic_compare"></block>
-      <block type="logic_operation"></block>
-      <block type="logic_negate"></block>
-      <block type="logic_boolean"></block>
-    </category>
-    <category name="לולאות">
-      <block type="controls_repeat_ext"></block>
-      <block type="controls_whileUntil"></block>
-      <block type="controls_for"></block>
-    </category>
-    <category name="מתמטיקה">
-      <block type="math_number"></block>
-      <block type="math_arithmetic"></block>
-    </category>
-    <category name="טקסט">
-      <block type="text"></block>
-      <block type="text_print"></block>
-    </category>
-    <category name="משתנים" custom="VARIABLE"></category>
-    <category name="פונקציות" custom="PROCEDURE"></category>
-  </xml>
+  
+<xml id="toolbox" style="display: none">
+  <category name="לוגיקה" colour="%{BKY_LOGIC_HUE}">
+    <block type="controls_if"></block>
+    <block type="logic_compare"></block>
+    <block type="logic_operation"></block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean"></block>
+    <block type="logic_null"></block>
+    <block type="logic_ternary"></block>
+  </category>
+  <category name="לולאות" colour="%{BKY_LOOPS_HUE}">
+    <block type="controls_repeat_ext">
+      <value name="TIMES">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_whileUntil"></block>
+    <block type="controls_for">
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+      <value name="BY">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_forEach"></block>
+    <block type="controls_flow_statements"></block>
+  </category>
+  <category name="מתמטיקה" colour="%{BKY_MATH_HUE}">
+    <block type="math_number"></block>
+    <block type="math_arithmetic"></block>
+    <block type="math_single"></block>
+    <block type="math_trig"></block>
+    <block type="math_constant"></block>
+    <block type="math_number_property"></block>
+    <block type="math_round"></block>
+    <block type="math_on_list"></block>
+    <block type="math_modulo"></block>
+    <block type="math_constrain">
+      <value name="LOW">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="HIGH">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_int">
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_float"></block>
+    <block type="math_atan2"></block>
+  </category>
+  <category name="טקסט" colour="%{BKY_TEXTS_HUE}">
+    <block type="text"></block>
+    <block type="text_join"></block>
+    <block type="text_append">
+      <value name="TEXT">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_length">
+      <value name="VALUE">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_isEmpty">
+      <value name="VALUE">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_indexOf">
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR">טקסט</field>
+        </block>
+      </value>
+      <value name="FIND">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_charAt">
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR">טקסט</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_getSubstring">
+      <value name="STRING">
+        <block type="variables_get">
+          <field name="VAR">טקסט</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_changeCase">
+      <value name="TEXT">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_trim">
+      <value name="TEXT">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+    <block type="text_prompt_ext">
+      <value name="TEXT">
+        <shadow type="text"></shadow>
+      </value>
+    </block>
+  </category>
+  <category name="רשימות" colour="%{BKY_LISTS_HUE}">
+    <block type="lists_create_with">
+      <mutation items="0"></mutation>
+    </block>
+    <block type="lists_create_with"></block>
+    <block type="lists_repeat">
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">5</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_length"></block>
+    <block type="lists_isEmpty"></block>
+    <block type="lists_indexOf">
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR">רשימה</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getIndex"></block>
+    <block type="lists_setIndex"></block>
+    <block type="lists_getSublist"></block>
+    <block type="lists_split">
+      <value name="DELIM">
+        <shadow type="text">
+          <field name="TEXT">,</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_sort"></block>
+    <block type="lists_reverse"></block>
+  </category>
+  <category name="משתנים" custom="VARIABLE" colour="%{BKY_VARIABLES_HUE}"></category>
+  <category name="פונקציות" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}"></category>
+</xml>
 
   <script>
     const workspace = Blockly.inject('blocklyDiv', {

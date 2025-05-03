@@ -4,31 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Blockly בעברית עם פייתון</title>
-  <script src="blockly/blockly_compressed.js">
-  function runCode() {
-    const code = Blockly.Python.workspaceToCode(workspace);
-    const outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = ''; // איפוס הפלט
-
-    Sk.configure({
-      output: function(text) {
-        outputDiv.innerHTML += text + '<br>';
-      },
-      read: function(x) {
-        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-          throw "File not found: '" + x + "'";
-        return Sk.builtinFiles["files"][x];
-      }
-    });
-
-    Sk.misceval.asyncToPromise(function() {
-      return Sk.importMainWithBody("<stdin>", false, code, true);
-    }).catch(function(err) {
-      outputDiv.innerHTML += `<span style="color:red;">שגיאה: ${err.toString()}</span>`;
-    });
-  }
-
-</script>
+  <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/python_compressed.js"></script>
   <script src="blockly/msg/js/he.js"></script>
@@ -166,30 +142,14 @@
 </style>
 </style>
 </style>
-
-  <script src="skulpt.min.js"></script>
-  <script src="skulpt-stdlib.js"></script>
-
 </head>
 <body>
   <div id="blocklyDiv"></div>
 
-  <div id="output" style="
-  direction: ltr;
-  background-color: #222;
-  color: #0f0;
-  padding: 10px;
-  font-family: monospace;
-  height: 150px;
-  overflow-y: auto;
-  border-top: 2px solid #555;
-"></div>
-
-<div id="controls">
+  <div id="controls">
     <button onclick="showCode()">הצג קוד פייתון</button>
     <button onclick="downloadCode()">הורד קובץ פייתון</button>
     <button onclick="saveProject()">שמור פרויקט</button>
-    <button onclick="runCode()">הרץ קוד</button>
     <label for="fileInput">טען פרויקט</label>
     <input type="file" id="fileInput" accept=".xml" onchange="loadProject(event)">
   </div>
