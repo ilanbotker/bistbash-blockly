@@ -1,110 +1,90 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>ברוך הבא למערכת מבוא לתכנות</title>
+  <meta charset="UTF-8">
+  <title>כניסה למערכת התרגול</title>
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
   <style>
     body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to bottom, #f0f4fa, #e1e9f3);
-      color: #1a1a1a;
-      direction: rtl;
+      font-family: sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2em;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f4f8;
     }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 800px;
-      align-items: center;
-    }
-
-    header img {
-      height: 48px;
-    }
-
-    h1 {
-      font-size: 2em;
-      margin-bottom: 1em;
-    }
-
-    .login-box {
+    .container {
+      text-align: center;
       background: white;
       padding: 2em;
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
     }
-
-    .login-box input {
-      font-size: 1em;
-      padding: 0.6em;
-      width: 100%;
-      margin-bottom: 1em;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
     }
-
-    .login-box button {
-      background: #0074d9;
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 15px;
+      background-color: #1976d2;
       color: white;
-      font-size: 1em;
-      padding: 0.6em 1.2em;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
     }
-
-    .login-box button:hover {
-      background: #005fa3;
+    button:hover {
+      background-color: #125ca1;
     }
-
-    .footer {
-      margin-top: 3em;
-      font-size: 0.9em;
-      color: #666;
-    }
-
   </style>
 </head>
 <body>
-  <header>
-    <img src="Techni Logo.png" alt="לוגו">
-  </header>
-
-  <main>
-    <h1>ברוך הבא למערכת מבוא לתכנות</h1>
-    <div class="login-box">
-      <label for="personalId">אנא הזן את המספר האישי שלך:</label>
-      <input type="text" id="personalId" placeholder="מספר אישי">
-      <button onclick="login()">התחל</button>
-    </div>
-  </main>
-
-  <div class="footer">
-    <a href="#">כניסת מורה</a>
+  <div class="container">
+    <h2>כניסה למערכת התרגול</h2>
+    <input type="text" id="personalId" placeholder="הכנס מספר אישי">
+    <br>
+    <button onclick="login()">התחל</button>
   </div>
 
   <script>
-    function login() {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAKsIjS9Ko81cfiLvrmV2tgCShrN6MJQqM"
+authDomain: "blockly-b7cde.firebaseapp.com"
+projectId: "blockly-b7cde"
+storageBucket: "blockly-b7cde.firebasestorage.app"
+messagingSenderId: "704926970997"
+appId: "1:704926970997:web:11c1f4a9850a65b08a743c"
+measurementId: "G-DQRKPM6BN2"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore(app);
+
+    async function login() {
       const id = document.getElementById("personalId").value.trim();
-      if (id.length === 0) {
+      if (!id) {
         alert("אנא הזן מספר אישי");
         return;
       }
 
-      // שמור את המספר האישי בזיכרון
-      localStorage.setItem("personalId", id);
-
-      // נווט לדף הבית של המשתמש (נבנה בהמשך)
-      window.location.href = "dashboard.html";
+      try {
+        const docRef = db.collection("users").doc(id);
+        const doc = await docRef.get();
+        if (doc.exists) {
+          const name = doc.data().name;
+          localStorage.setItem("personalId", id);
+          localStorage.setItem("userName", name);
+          window.location.href = "dashboard.html";
+        } else {
+          alert("לא נמצא משתמש עם מספר אישי זה");
+        }
+      } catch (error) {
+        console.error("שגיאה בגישה ל-Firebase:", error);
+        alert("שגיאה בעת התחברות");
+      }
     }
   </script>
 </body>
