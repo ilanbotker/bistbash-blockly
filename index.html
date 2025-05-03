@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>עורך Blockly לפייתון</title>
+  <title>Blockly בעברית עם פייתון</title>
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/python_compressed.js"></script>
@@ -11,7 +12,6 @@
     html, body {
       height: 100%;
       margin: 0;
-      overflow: hidden;
       font-family: sans-serif;
       direction: rtl;
     }
@@ -23,26 +23,13 @@
       height: 60px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
       padding: 0 1em;
       gap: 1em;
-      background: #e3f2fd;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: #f0f0f0;
     }
     button {
-      padding: 0.5em 1em;
+      padding: 10px 20px;
       font-size: 16px;
-      background-color: #1976d2;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1565c0;
-    }
-    #codeArea {
-      display: none;
     }
   </style>
 </head>
@@ -88,9 +75,7 @@
 
     function showCode() {
       const code = Blockly.Python.workspaceToCode(workspace);
-      alert("קוד פייתון:
-
-" + code);
+      alert("קוד פייתון:\n\n" + code);
     }
 
     function downloadCode() {
