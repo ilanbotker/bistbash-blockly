@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <title>Blockly IDE בעברית</title>
+  <meta charset="UTF-8">
+  <title>Blockly בעברית עם פייתון</title>
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/python_compressed.js"></script>
@@ -14,67 +14,45 @@
       margin: 0;
       font-family: sans-serif;
       direction: rtl;
-      background-color: #f0f8ff;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background-color: #e6f0ff;
-      border-bottom: 1px solid #ccc;
-    }
-    #logo {
-      height: 40px;
-    }
-    #buttons {
-      display: flex;
-      gap: 10px;
-    }
-    button {
-      padding: 8px 12px;
-      font-size: 14px;
-      background-color: #007bff;
-      border: none;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
     }
     #blocklyDiv {
-      height: calc(100vh - 60px);
+      height: calc(100% - 60px);
       width: 100%;
+    }
+    #controls {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 1em;
+      gap: 1em;
+      background: #f0f0f0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img id="logo" src="Techni Logo.png" alt="לוגו">
-    <div id="buttons">
-      <button onclick="showCode()">הצג קוד</button>
-      <button onclick="downloadPython()">הורד קוד</button>
-      <button onclick="saveProject()">שמור פרויקט</button>
-      <button onclick="loadProject()">טען פרויקט</button>
-      <input type="file" id="fileInput" accept=".xml" style="display:none">
-    </div>
-  </header>
-
+  <div id="controls">
+    <button onclick="showCode()">הצג קוד פייתון</button>
+    <button onclick="downloadCode()">הורד קובץ</button>
+  </div>
   <div id="blocklyDiv"></div>
+  <pre id="codeArea"></pre>
 
   <xml id="toolbox" style="display: none">
     <category name="לוגיקה">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
       <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
       <block type="logic_boolean"></block>
     </category>
     <category name="לולאות">
-      <block type="controls_repeat_ext">
-        <value name="TIMES"><shadow type="math_number"><field name="NUM">10</field></shadow></value>
-      </block>
+      <block type="controls_repeat_ext"></block>
       <block type="controls_whileUntil"></block>
+      <block type="controls_for"></block>
     </category>
     <category name="מתמטיקה">
       <block type="math_number"></block>
@@ -89,7 +67,6 @@
   </xml>
 
   <script>
-    Blockly.setLocale(Blockly.Msg.he);
     const workspace = Blockly.inject('blocklyDiv', {
       toolbox: document.getElementById('toolbox'),
       rtl: true,
@@ -98,50 +75,17 @@
 
     function showCode() {
       const code = Blockly.Python.workspaceToCode(workspace);
-      alert(code);
+      alert("קוד פייתון:\n\n" + code);
     }
 
-    function downloadPython() {
+    function downloadCode() {
       const code = Blockly.Python.workspaceToCode(workspace);
       const blob = new Blob([code], { type: 'text/x-python' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'project.py';
+      a.download = 'תרגיל.py';
       a.click();
-      URL.revokeObjectURL(a.href);
     }
-
-    function saveProject() {
-      const xml = Blockly.Xml.workspaceToDom(workspace);
-      const xmlText = Blockly.Xml.domToPrettyText(xml);
-      const blob = new Blob([xmlText], { type: 'text/xml' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'project.xml';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    function loadProject() {
-      document.getElementById('fileInput').click();
-    }
-
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const xml = Blockly.Xml.textToDom(e.target.result);
-          workspace.clear();
-          Blockly.Xml.domToWorkspace(xml, workspace);
-        } catch (err) {
-          alert("שגיאה בטעינת הפרויקט. ודא שקובץ ה־XML תקין.");
-          console.error(err);
-        }
-      };
-      reader.readAsText(file);
-    });
   </script>
 </body>
 </html>
