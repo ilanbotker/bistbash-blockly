@@ -508,5 +508,15 @@
   <input type="file" id="fileInput" accept=".xml" onchange="loadProject(event)">
 </div>
 
+
+<script>
+  window.addEventListener("beforeunload", function (e) {
+    const confirmationMessage = "שינויים שביצעת ייתכן ולא יישמרו. האם אתה בטוח שברצונך לעזוב?";
+    e.preventDefault();
+    e.returnValue = confirmationMessage;
+    return confirmationMessage;
+  });
+</script>
+
 </body>
 </html>
