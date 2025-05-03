@@ -25,6 +25,7 @@
     }
 
     #controls {
+      flex-direction: row-reverse;
       height: 100px;
       display: flex;
       align-items: center;
@@ -166,14 +167,7 @@
 <body>
   <div id="blocklyDiv"></div>
 
-  <div id="controls">
-    <button onclick="showCode()">הצג קוד פייתון</button>
-    <button onclick="downloadCode()">הורד קובץ פייתון</button>
-    <button onclick="saveProject()">שמור פרויקט</button>
-    <button onclick="runCode()">הרץ קוד</button>
-    <label for="fileInput">טען פרויקט</label>
-    <input type="file" id="fileInput" accept=".xml" onchange="loadProject(event)">
-  </div>
+  
 
   <div id="notification"></div>
 
@@ -444,5 +438,15 @@
     document.getElementById("outputModal").style.display = "none";
   }
 </script>
+
+<div id="controls">
+  <button onclick="runCode()">▶️ הרץ קוד</button>
+  <label for="fileInput">📂 טען פרויקט</label>
+  <button onclick="saveProject()">💾 שמור פרויקט</button>
+  <button onclick="showCode()">📋 הצג קוד פייתון</button>
+  <button onclick="downloadCode()">⬇️ הורד קובץ פייתון</button>
+  <input type="file" id="fileInput" accept=".xml" onchange="loadProject(event)">
+</div>
+
 </body>
 </html>
