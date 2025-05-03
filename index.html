@@ -142,22 +142,31 @@
 </style>
 </style>
 </style>
+<script src="skulpt.min.js"></script>
+<script src="skulpt-stdlib.js"></script>
+
+<style>
+  @keyframes fadeInZoom {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .fade-in {
+    animation: fadeInZoom 0.3s ease-out;
+  }
+</style>
+
 </head>
 <body>
   <div id="blocklyDiv"></div>
 
-  <div id="output" style="
-  direction: ltr;
-  background-color: #111;
-  color: #0f0;
-  padding: 10px;
-  font-family: monospace;
-  height: 150px;
-  overflow-y: auto;
-  border-top: 2px solid #555;
-"></div>
-
-<div id="controls">
+  <div id="controls">
     <button onclick="showCode()">הצג קוד פייתון</button>
     <button onclick="downloadCode()">הורד קובץ פייתון</button>
     <button onclick="saveProject()">שמור פרויקט</button>
@@ -344,6 +353,8 @@
     workspaceRef = workspace;
     input.value = "";
     modal.style.display = "block";
+    modal.querySelector("div").classList.add("fade-in");
+    setTimeout(() => modal.querySelector("div").classList.remove("fade-in"), 300);
     input.focus();
   };
 
@@ -381,13 +392,25 @@
 <img id="techniLogo" src="Techni Logo.png" alt="Techni Logo">
 
 
-<script src="skulpt.min.js"></script>
-<script src="skulpt-stdlib.js"></script>
+<!-- חלון פלט -->
+<div id="outputModal" style="display:none; position:fixed; z-index:3000; top:0; right:0; bottom:0; left:0; background-color: rgba(0,0,0,0.7);">
+  <div style="background-color:#111; color:#0f0; max-width:600px; margin:5% auto; padding:20px; border-radius:12px; font-family:monospace; position:relative;">
+    <h3 style="color:white; margin-top:0;">פלט התוכנית:</h3>
+    <div id="output" style="max-height:300px; overflow-y:auto; background:#000; padding:10px; border-radius:6px; border:1px solid #444;"></div>
+    <button onclick="closeOutput()" style="margin-top:15px; padding:10px 20px; background-color:#444; color:white; border:none; border-radius:6px; cursor:pointer;">סגור</button>
+  </div>
+</div>
+
+
 <script>
   function runCode() {
     console.log("🔧 runCode התחיל");
     const outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = ''; // reset output
+    const modal = document.getElementById("outputModal");
+    outputDiv.innerHTML = '';
+    modal.style.display = "block";
+    modal.querySelector("div").classList.add("fade-in");
+    setTimeout(() => modal.querySelector("div").classList.remove("fade-in"), 300);
 
     let code = "";
     try {
@@ -415,6 +438,10 @@
       console.error("שגיאה בהרצה:", err.toString());
       outputDiv.innerHTML += '<span style="color:red;">שגיאה בהרצה: ' + err.toString() + '</span>';
     });
+  }
+
+  function closeOutput() {
+    document.getElementById("outputModal").style.display = "none";
   }
 </script>
 </body>
